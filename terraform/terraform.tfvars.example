@@ -1,0 +1,36 @@
+# ==============================================================================
+# Archivo de Ejemplo: terraform.tfvars.example
+# Copie este archivo a 'terraform.tfvars' y ajuste los valores antes de aplicar.
+# ==============================================================================
+
+# Región de despliegue en AWS
+aws_region  = "us-east-1"
+environment = "production"
+project_name = "secure-cloud-infra"
+
+# Configuración de Red (VPC)
+vpc_cidr             = "10.0.0.0/16"
+public_subnet_cidrs  = ["10.0.1.0/24", "10.0.2.0/24"]
+private_subnet_cidrs = ["10.0.10.0/24", "10.0.11.0/24"]
+availability_zones   = ["us-east-1a", "us-east-1b"]
+
+# Acceso Administrativo Seguro (Principio de Mínimo Privilegio)
+# IMPORTANTE: Reemplace con su IP pública o bloque CIDR de su VPN corporativa (ej. "198.51.100.25/32")
+# NUNCA use "0.0.0.0/0" en ambientes productivos.
+allowed_admin_cidrs = [
+  # "TU_IP_PUBLICA/32"
+]
+
+# Aprovisionamiento del host Bastion perimetral
+enable_bastion = true
+
+# Llave SSH existente en AWS (Opcional - si no se define, se gestionará vía AWS SSM)
+# ssh_key_name = "mi-llave-ssh-aws"
+
+# Tipo de instancia EC2
+instance_type = "t3.micro"
+
+# Parámetros del Agente de Detección de Amenazas en Tiempo Real
+brute_force_threshold      = 5   # Máximo 5 intentos fallidos
+brute_force_window_seconds = 60  # Dentro de una ventana de 60 segundos
+log_retention_days         = 90  # Retención en CloudWatch Logs (días)

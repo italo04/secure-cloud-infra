@@ -1,0 +1,30 @@
+[Unit]
+Description=Real-Time SSH Brute Force Detection and Active Mitigation Daemon
+Documentation=https://github.com/italo04/secure-cloud-infra
+After=network.target rsyslog.target systemd-journald.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/threat-detector
+EnvironmentFile=-/etc/threat-detector/env
+ExecStart=/usr/bin/python3 /opt/threat-detector/threat_detector.py \
+    --log-path /var/log/auth.log \
+    --alert-path /var/log/threat_detection.log
+
+# Estrategia de recuperación y resiliencia
+Restart=always
+RestartSec=5s
+KillMode=mixed
+TimeoutStopSec=15
+
+# Sandboxing y límites de recursos
+LimitNOFILE=65535
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=threat-detector
+
+[Install]
+WantedBy=multi-user.target
