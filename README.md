@@ -77,7 +77,7 @@ flowchart TD
     Daemon -->|Inyección DROP Inmediata| IPT
     Daemon -->|Eventos JSON Estructurados| CW_App
     Daemon -->|Notificación de Incidente| SNS
-    Workload_EC2 -.->|IAM Least Privilege (Lectura)| S3
+    Workload_EC2 -.->|IAM Least Privilege - Lectura| S3
     KMS -.->|Cifrado en Reposo| EBS
     KMS -.->|Cifrado en Reposo| S3
 ```
